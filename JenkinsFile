@@ -1,9 +1,9 @@
 pipeline {
     environment {
-        AWS_REGION = 'eu-north-1'
-        ACCOUNT_ID = '438987840260'
-        ECR_REPO = 'studentapp-repo'
-        ECR_URL = "438987840260.dkr.ecr.eu-north-1.amazonaws.com/studentapp-repo"
+        AWS_REGION = 'ap-southeast-2'
+        ACCOUNT_ID = '510931056289'
+        ECR_REPO = 'devops_repo/app'
+        ECR_URL = "510931056289.dkr.ecr.ap-southeast-2.amazonaws.com/devops_repo/app"
         IMAGE_NAME = 'studentapp:latest'
     }
 
