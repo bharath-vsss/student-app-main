@@ -38,7 +38,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t studentapp:1.0'
+                sh 'docker build -t studentapp:1.0 .'
             }
         }
 
