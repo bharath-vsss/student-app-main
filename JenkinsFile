@@ -17,7 +17,7 @@ pipeline {
                     $class: 'GitSCM',
                     branches: [[name: '*/main']],
                     userRemoteConfigs: [[
-                        url: 'https://github.com/bharath-vsss/devops_group.git',
+                        url: 'https://github.com/bharath-vsss/student-app-main.git',
                         credentialsId: 'github_token'
                     ]]
                 ])
