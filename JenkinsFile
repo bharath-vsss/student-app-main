@@ -4,7 +4,7 @@ pipeline {
         ACCOUNT_ID = '510931056289'
         ECR_REPO = 'devops_repo/app'
         ECR_URL = "510931056289.dkr.ecr.ap-southeast-2.amazonaws.com/devops_repo/app"
-        IMAGE_NAME = 'studentapp:latest'
+        IMAGE_NAME = 'studentapp:1.0'
     }
 
     agent any
@@ -36,17 +36,6 @@ pipeline {
             }
         }
 
-         stage('Deploy To Artifactory') {
-            steps {
-                configFileProvider([
-                    configFile(fileId: '60e6d22d-1609-44c1-8e7b-0cd2c5c34781', variable: 'MySettings')
-                ]) {
-                    echo '-------Deploying to Artifactory------'
-                    sh "mvn deploy -s $MySettings"
-                }
-            } 
-        } 
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t studentapp:latest .'
@@ -72,7 +61,7 @@ pipeline {
         stage('Tag Docker Image') {
             steps {
                 sh '''
-                docker tag studentapp:latest $ECR_URL:latest
+                docker tag studentapp:1.0 $ECR_URL:latest
                '''
             }
         }
