@@ -1,7 +1,7 @@
 @Library('my-shared-lib') _
 
 pipeline {
-    agent any
+    agent { label 'worker_node' } 
 
     stages {
         stage('Checkout') {
@@ -16,6 +16,7 @@ pipeline {
             steps {
                 sh 'mvn clean install -DskipTests'
                 script {
+                    // Extracting version from pom.xml
                     env.APP_VERSION = sh(script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true).trim()
                 }
                 echo "Detected Version: ${env.APP_VERSION}"
@@ -36,6 +37,7 @@ pipeline {
 
         stage('Push to ECR') {
             steps {
+                // Ensure 'aws-creds' matches the ID in your Jenkins Credentials screenshot
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-creds']]) {
                     script {
                         // Calling the shared library function
@@ -48,8 +50,9 @@ pipeline {
 
     post {
         always {
+            // Cleans up local images and logs out to keep the worker storage clean
             sh 'docker logout || true'
             sh "docker rmi studentapp:${env.APP_VERSION} || true"
         }
     }
-}
+} // Added missing closing brace for the pipeline
